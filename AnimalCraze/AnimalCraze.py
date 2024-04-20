@@ -30,7 +30,7 @@ def index():
             color_scheme="grass",
             on_click=State.increment,
         ),
-        background="linear-gradient(45deg, #000, #fff)",
+        background="linear-gradient(45deg, #29F2C2, #FF53EE)",
         height="100vh",
         spacing="4",
     )
