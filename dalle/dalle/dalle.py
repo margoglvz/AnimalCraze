@@ -42,20 +42,99 @@ class State(rx.State):
             self.image_processing = False
             yield rx.window_alert(f"Error with OpenAI Execution. {ex}")
 
+class State2(rx.State):
+    """The app state."""
 
-def index():
+    image_url = ""
+    image_processing = False
+    image_made = False
+    form_data: dict = {}
+
+    def handle_submit(self, form_data: dict):
+        for key in form_data.keys():
+            self.form_data[key] = form_data[key]
+
+    def check_if_valid(self, form_data: dict[str]) -> bool:
+        entry: str = form_data["prompt_text"]
+        '''
+        Checks if user entry is valid
+        by comparing to database of valid entries
+        '''
+        valid_entry = False
+
+        opened_list = open(f"{entry}.txt", "r")
+        for line in opened_list.readlines():
+            if entry == line:
+                valid_entry = True
+                break
+        
+        return valid_entry
+
+        
+
+    def get_dalle_result(self):
+        prompt_text: str = self.form_data["prompt_text"]
+        self.image_made = False
+        self.image_processing = True
+        # Yield here so the image_processing take effects and the circular progress is shown.
+        yield
+        try:
+            response = get_openai_client().images.generate(
+                prompt=prompt_text, n=1, size="1024x1024"
+            )
+            self.image_url = response.data[0].url
+            self.image_processing = False
+            self.image_made = True
+            yield
+        except Exception as ex:
+            self.image_processing = False
+            yield rx.window_alert(f"Error with OpenAI Execution. {ex}")
+
+def check_if_valid(form_data: dict[str]) -> bool:
+    entry: str = form_data["prompt_text"]
+    '''
+    Checks if user entry is valid
+    by comparing to database of valid entries
+    '''
+    valid_entry = False
+
+    opened_list = open(f"{entry}.txt", "r")
+    for line in opened_list.readlines():
+        if entry == line:
+            valid_entry = True
+            break
+    
+    return valid_entry
+
+def generate_dalle_string(animal: str, emotion: str, location: str) -> str:
+    string = f"A {emotion} {animal} that lives in {location}"
+    return string
+
+def generate_chatgtp_string(animal: str, name: str, emotion: str, location: str) -> str:
+    string = f"Write a story about a {emotion} {animal} named {name} that lives in {location}"
+    return string
+
+user_inputs = {
+    "animal": "Enter an animal of your choice:",
+    "name": "What is the name of your animal?:",
+    "emotion": "What emotion would you describe this animal having?",
+    "location": "Where does this animal live?"
+}
+    
+
+def get_input(question_index: int):
     return rx.center(
         rx.vstack(
-            rx.heading("DALL-E", font_size="1.5em"),
+            rx.heading(user_inputs.values()[question_index], font_size="1.5em"),
             rx.form(
                 rx.vstack(
                     rx.input(
-                        id="prompt_text",
-                        placeholder="Enter a prompt..",
+                        id=user_inputs.keys()[question_index],
+                        placeholder="Enter here",
                         size="3",
                     ),
                     rx.button(
-                        "Generate Image",
+                        "Submit",
                         type="submit",
                         size="3",
                     ),
@@ -63,7 +142,7 @@ def index():
                     spacing="2",
                 ),
                 width="100%",
-                on_submit=State.get_dalle_result,
+                on_submit=State2.handle_submit
             ),
             rx.divider(),
             rx.cond(
@@ -93,4 +172,12 @@ app = rx.App(
         appearance="light", has_background=True, radius="medium", accent_color="mint"
     ),
 )
-app.add_page(index, title="Reflex:DALL-E")
+
+for i in range(len(user_inputs)):
+    app.add_page(get_input(i), title="Component")
+
+# at end (no errors?) 
+#then plug into dalle and chatgtp 
+
+
+
