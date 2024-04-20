@@ -5,6 +5,8 @@ from rxconfig import config
 import reflex as rx
 
 
+
+
 class State(rx.State):
     count: int = 0
 
@@ -28,6 +30,8 @@ def index():
             color_scheme="grass",
             on_click=State.increment,
         ),
+        background="linear-gradient(45deg, #000, #fff)",
+        height="100vh",
         spacing="4",
     )
 
