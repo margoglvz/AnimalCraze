@@ -1,2 +1,10 @@
-openai>=1
-reflex>=0.4.0
+coverage==7.4.4
+gradio==4.27.0
+inputs==0.5
+iso3166==2.1.1
+npm==0.1.1
+openai==1.21.2
+Pattern==3.6
+plotly==5.20.0
+python-dotenv==1.0.1
+reflex==0.4.8.post1
