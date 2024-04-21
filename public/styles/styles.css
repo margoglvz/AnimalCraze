@@ -1,20 +1,8 @@
 :root {
-    --light-green: #00ff7f;
-    --dark-green: #16560e;
+    --light-green: #29F2C2;
+    --dark-green: #1B5E3A;
 }
 
-/* .theme-alt {
-    color: var(--dark-green);
-    background-color: var(--light-green);
-} */
-
-
-
-/* html {
-    background: linear-gradient(180deg, var(--light-green) 0%, var(--dark-green) 100%);
-    background-color: var(--light-green);
-    color: var(--dark-green);
-} */
 
 .landing {
     background: linear-gradient(180deg, var(--light-green) 0%, var(--dark-green) 100%);
@@ -132,7 +120,7 @@ section {
         font-family: "Fahkwang", sans-serif;
         font-weight: 700;
         font-style: normal;
-        font-size: 4em;
+        font-size: 6em;
         letter-spacing: -0.05em;
         text-transform: uppercase;
     }
@@ -145,7 +133,7 @@ section {
     p {
         margin-top: 0px;
         margin-bottom: 0px;
-        font-size: 1em;
+        font-size: 1.5em;
         font-weight: 400;
         display: block;
     
@@ -189,237 +177,3 @@ section {
         /* object-fit: cover; */
     }
 }
-
-
-.create, .login, .signup {
-    background-color: #bbff99;
-    background-image: linear-gradient(319deg, #bbff99 0%, #ffec99 37%, #ff9999 100%);
-    display: grid;
-    align-items: center;
-    justify-items: center;
-}
-
-.create-form, .login-form, .signup-form {
-    height: 80%;
-    width: 75%;
-    background: #f8f4e5;
-    padding: 50px 100px;
-    border: 2px solid rgba(0, 0, 0, 1);
-    input {
-        display: block;
-        width: 100%;
-        font-size: 2em;
-        font-family: "Fjalla One", sans-serif;
-        font-weight: 400;
-        font-style: normal;
-        margin-bottom: 2em;
-        line-height: 3em;
-        border: none;
-        border-bottom: 5px solid rgba(0, 0, 0, 1);
-        background: #f8f4e5;
-        min-width: 250px;
-        padding-left: 5px;
-        outline: none;
-        color: rgba(0, 0, 0, 1);
-    }
-    input:focus {
-        border-bottom: 5px solid #ffa580;
-    }
-    button {
-        display: block;
-        margin: 0 auto;
-        line-height: 4em;
-        padding: 0 20px;
-        background-color: #ffa580;
-        letter-spacing: 2px;
-        transition: .2s all ease-in-out;
-        border: 1px solid rgba(0, 0, 0, 1);
-        box-shadow: 3px 3px 1px 1px #95a4ff, 3px 3px 1px 1px rgba(0, 0, 0, 1);
-    }
-    button:hover {
-        background-color: rgba(0, 0, 0, 1);
-        color: white;
-        border: 1px solid rgba(0, 0, 0, 1);
-    }
-    ::selection {
-        background: #ffc8ff;
-    
-    }
-
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus {
-        border-bottom: 5px solid #95a4ff;
-        -webkit-text-fill-color: #2A293E;
-        -webkit-box-shadow: 0 0 0px 1000px #f8f4e5;
-        
-    }
-}
-
-
-.create-result {
-    padding-top: 8.3em;
-    padding-bottom: 8.3em;
-    height: 100%;
-    position: relative;
-    /* display: flex; */
-    align-items: center;
-    justify-content: center;
-    h1 {
-        font-family: "Fahkwang", sans-serif;
-        font-weight: 700;
-        font-style: normal;
-        text-transform: lowercase;
-        span {
-            text-decoration: var(--dark-green) wavy underline;
-        }
-        span:hover {
-            /* text-decoration: var(--light-green) wavy underline; */
-            color: var(--dark-green);
-        }
-        /* span {
-            background-image: linear-gradient(
-                -225deg,
-                #231557 0%,
-                #44107a 29%,
-                #ff1361 67%,
-                #fff800 100%
-            );
-            background-size: auto auto;
-            background-clip: border-box;
-            background-size: 200% auto;
-            background-clip: text;
-            text-fill-color: transparent;
-            -webkit-background-clip: text;
-            -webkit-background-color: transparent;
-            animation: textclip 2s linear infinite;
-            display: inline-block;
-            
-        }
-        @keyframes textclip {
-            to {
-                background-position: 200% center;
-            }
-        } */
-    }
-    
-
-    p {
-        margin-top: 0px;
-        margin-bottom: 0px;
-        font-size: 1em;
-        font-weight: 400;
-        display: block;
-    }
-
-    .container.result {
-        display: grid;
-        align-items: stretch;
-        width: 100%;
-        grid-auto-columns: 1fr;
-        grid-column-gap: 1.25em;
-        grid-row-gap: 1.25em;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
-    }
-
-    #image {
-        grid-column-start: 1;
-        grid-column-end: 2;
-    }
-
-    #image img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-    }
-
-    #story {
-        grid-column-start: 2;
-        grid-column-end: 3;
-    }
-
-    .contain {
-        display: flex;
-        width: 100%;
-        height: 100%;
-        /* margin-bottom: 3.1em; */
-        /* padding: 4.8em, 1.9em; */
-        padding: 5em 2em;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        border: solid 1.2px #1c1c1c;
-        /* background-color: #f8f4e5; */
-        background: transparent;
-        color: #1c1c1c;
-        text-align: center;
-    }
-
-    /* @media screen and (max-width: 1000px) {
-        .container.result {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #image {
-            grid-column-start: 1;
-            grid-column-end: 3;
-
-        }
-    
-        #image img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-        }
-
-        #story {
-            grid-column-start: 1;
-            grid-column-end: 3;
-        }
-
-        .contain {
-            width: 50%;
-            height: 50%;
-        }
-    }
-
-    .image {
-        width: 50%;
-    }
-    .image img {
-        width: 100%;
-    }
-    .story {
-        height: 100%;
-        background: rgba(255,255,255,0.35);
-        border-radius: 20px;
-        -webkit-backdrop-filter: blur(5px);
-        backdrop-filter: blur(5px);
-        border: 1px solid rgba(255,255,255,0.175);
-    } */
-}
-
-
-
-
-
-
-/* .wrapper { */
-    /* background-color: transparent; */
-    /* From https://css.glass */
-    /* background: rgba(255,255,255,0.35);
-    border-radius: 20px;
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,0.175);
-    height: 95vh;
-    width: 95vw;
-    margin: auto; */
-    /* display: flex;
-    flex-direction: column; */
-    /* justify-content: center; */
-/* } */
