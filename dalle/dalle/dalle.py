@@ -116,6 +116,7 @@ def index():
         background="radial-gradient(circle at 22% 11%,rgba(41, 242, 194,.20), hsla(0,0%,100%,0) 19%),radial-gradient(circle at 82% 25%,rgba(19,128,255,.18),hsla(0,0%,100%,0) 35%),radial-gradient(circle at 25% 61%,rgba(185, 77, 251, .28),hsla(0,0%,100%,0) 55%)",
     )
 
+
 def new():
     return newpage(State)
 
