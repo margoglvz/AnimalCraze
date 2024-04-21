@@ -3,6 +3,7 @@
 import reflex as rx
 from dotenv import load_dotenv
 import os
+from .AnimalResults import AnimalResults
 
 import openai
 
@@ -43,17 +44,17 @@ class State(rx.State):
         # Yield here so the image_processing take effects and the circular progress is shown.
         
         yield
-        try:
-            response = get_openai_client().images.generate(
-                prompt=dalle_prompt_text, n=1, size="1024x1024"
-            )
-            self.image_url = response.data[0].url
-            self.image_processing = False
-            self.image_made = True
-            yield
-        except Exception as ex:
-            self.image_processing = False
-            yield rx.window_alert(f"Error with OpenAI Execution. {ex}")
+        # try:
+        #     response = get_openai_client().images.generate(
+        #         prompt=dalle_prompt_text, n=1, size="1024x1024"
+        #     )
+        #     self.image_url = response.data[0].url
+        #     self.image_processing = False
+        #     self.image_made = True
+        #     yield
+        # except Exception as ex:
+        #     self.image_processing = False
+        #     yield rx.window_alert(f"Error with OpenAI Execution. {ex}")
         
         self.story_made = False
         self.story_processing = True
@@ -68,7 +69,8 @@ class State(rx.State):
             )
             self.story = response.choices[0].message.content
             print(self.story)
-            rx.box(rx.text(self.story,
+            rx.box(
+                rx.text(self.story,
                         font_weight="bold",
                         font_size="2em"))
 
@@ -78,6 +80,7 @@ class State(rx.State):
         except Exception as ex:
             self.story_processing = False
             yield rx.window_alert(f"Error with OpenAI Execution. {ex}")
+        yield rx.redirect("/AnimalResults")
 
 
 
@@ -89,27 +92,28 @@ def index():
                 rx.vstack(
                     rx.input(
                         id="animal",
-                        placeholder="Enter a prompt..",
+                        placeholder="Enter an animal",
                         size="3",
                     ),
                     rx.input(
                         id="name",
-                        placeholder="Enter a prompt..",
+                        placeholder="Enter a name",
                         size="3",
                     ),
                     rx.input(
                         id="emotion",
-                        placeholder="Enter a prompt..",
+                        placeholder="Enter an emotion",
                         size="3",
                     ),
                     rx.input(
                         id="location",
-                        placeholder="Enter a prompt..",
+                        placeholder="Enter a location",
                         size="3",
                     ),
                     rx.button(
                         "SUBMIT",
-                        type="submit",
+                        on_click=rx.redirect("C:\\Users\\msgal\\Developer\\AnimalCraze\\dalle\\dalle\\AnimalResults.py"),
+                        external=True,
                         size="3",
                     ),
                     align="stretch",
@@ -136,7 +140,8 @@ def index():
         ),
         width="100%",
         height="100vh",
-        background="radial-gradient(circle at 22% 11%,rgba(62, 180, 137,.20),hsla(0,0%,100%,0) 19%),radial-gradient(circle at 82% 25%,rgba(33,150,243,.18),hsla(0,0%,100%,0) 35%),radial-gradient(circle at 25% 61%,rgba(250, 128, 114, .28),hsla(0,0%,100%,0) 55%)",
+
+        background= "radial-gradient(circle at 22% 11%, rgba(41, 242, 194, .20), hsla(0,0%,100%,0) 19%), radial-gradient(circle at 82% 25%, rgba(19, 128, 255, .25), hsla(0,0%,100%,0) 55%), radial-gradient(circle at 25% 61%, rgba(185, 77, 251, .28), hsla(0,0%,100%,0) 55%)"
     )
 
 
@@ -150,4 +155,6 @@ app = rx.App(
 
 
 app.add_page(index, title="Reflex:DALL-E")
+app.add_page(AnimalResults, title="Reflex:Animal Results")
 
+#rx.redirect
