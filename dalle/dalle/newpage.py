@@ -7,12 +7,12 @@ def newpage(State):
     image_url = State.image_url
     story = State.story
     
-    return rx.center(
-        rx.vstack(
-            rx.heading("Results"),
-            rx.image(src=image_url, width="20vw", height="auto"),
-            rx.divider(),
-            rx.box(rx.text(story,
+    return rx.chakra.center(
+        rx.chakra.vstack(
+            rx.chakra.heading("Results"),
+            rx.chakra.image(src=image_url, width="20vw", height="auto"),
+            rx.chakra.divider(),
+            rx.chakra.box(rx.chakra.text(story,
             font_weight="bold",
             font_size="1em")),
             bg="white",
