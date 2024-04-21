@@ -117,12 +117,6 @@ def index():
             rx.cond(
                 State.content_processing,
                 rx.chakra.circular_progress(is_indeterminate=True),
-                rx.cond(
-                    State.content_made,
-                    rx.image(
-                        src=State.image_url,
-                    ),
-                ),
             ),
             width="25em",
             bg="white",
