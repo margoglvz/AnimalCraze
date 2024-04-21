@@ -10,11 +10,11 @@ def newpage(State):
     return rx.center(
         rx.vstack(
             rx.heading("Results"),
-            rx.image(src=image_url, width="100px", height="auto"),
+            rx.image(src=image_url, width="20vw", height="auto"),
             rx.divider(),
             rx.box(rx.text(story,
             font_weight="bold",
-            font_size="2em")),
+            font_size="1em")),
             bg="white",
             padding_x="5em",
             padding_y="2em",
