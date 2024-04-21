@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 
 const app = express();
-const port = 8000;
+const port = 8080;
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
