@@ -101,32 +101,32 @@ class State(rx.State):
 
 
 def index():
-    return rx.center(
-        rx.vstack(
-            rx.heading("Animal Generator", font_size="1.5em"),
-            rx.form(
-                rx.vstack(
-                    rx.input(
+    return rx.chakra.center(
+        rx.chakra.vstack(
+            rx.chakra.heading("Animal Generator", font_size="1.5em"),
+            rx.chakra.form(
+                rx.chakra.vstack(
+                    rx.chakra.input(
                         id="animal",
                         placeholder="Enter an animal..",
                         size="3",
                     ),
-                    rx.input(
+                    rx.chakra.input(
                         id="name",
                         placeholder="Enter animal's name..",
                         size="3",
                     ),
-                    rx.input(
+                    rx.chakra.input(
                         id="emotion",
                         placeholder="Enter animal's emotion..",
                         size="3",
                     ),
-                    rx.input(
+                    rx.chakra.input(
                         id="location",
                         placeholder="Enter animal's location..",
                         size="3",
                     ),
-                    rx.button(
+                    rx.chakra.button(
                         "SUBMIT",
                         type="submit",
                         size="3",
@@ -137,16 +137,10 @@ def index():
                 width="100%",
                 on_submit=State.process,
             ), 
-            rx.divider(),
+            rx.chakra.divider(),
             rx.cond(
                 State.content_processing,
                 rx.chakra.circular_progress(is_indeterminate=True),
-                rx.cond(
-                    State.content_made,
-                    rx.image(
-                        src=State.image_url,
-                    ),
-                ),
             ),
             width="25em",
             bg="white",
