@@ -1,23 +1,19 @@
-# Reflex Chat App
+# Critter Creations
 
-A user-friendly, highly customizable Python web app designed to demonstrate LLMs in a ChatGPT format.
+A user-interactive web application that allows users to build animal characters with heart-warming stories to ultimately raise animal awareness and acknowledge how we can help animals all around the world.
 
-<div align="center">
-<img src="./docs/demo.gif" alt="icon"/>
-</div>
+# Getting Started to host locally
 
-# Getting Started
-
-You'll need a valid OpenAI subscription - save your API key under the environment variable `OPENAI_API_KEY`:
-
-```bash
-export OPENAI_API_KEY="YOUR_OPENAI_API_KEY" # replace me!
+You'll need a valid OpenAI subscription - save your API key under the environment variable `API_KEY` (not in quotes) in a '.env' file within this directory:
 ```
+AnimalCraze/dalle/dalle
+```
+
 
 ### 🧬 1. Clone the Repo
 
 ```bash
-git clone https://github.com/reflex-dev/reflex-chat.git
+git clone https://github.com/margoglvz/AnimalCraze.git
 ```
 
 ### 📦 2. Install Reflex
@@ -28,6 +24,10 @@ To get started with Reflex, you'll need:
 - Node.js 12.22.0+ \(No JavaScript knowledge required!\)
 - Pip dependencies: `reflex`, `openai`
 
+Go into this directory:
+```
+cd ./dalle/dalle
+```
 Install `pip` dependencies with the provided `requirements.txt`:
 
 ```bash
@@ -43,22 +43,24 @@ reflex init
 reflex run
 ```
 
-# Features
+### 📦 4. Install node.js and modules
 
-- 100% Python-based, including the UI, using Reflex
-- Create and delete chat sessions
-- The application is fully customizable and no knowledge of web dev is required to use it.
-    - See https://reflex.dev/docs/styling/overview for more details 
-- Easily swap out any LLM
-- Responsive design for various devices
+After installing and running Reflex, you'll need to install and run node.js.
 
-# Contributing
+To get started, go back into the root directory:
+```
+cd ../..
+```
 
-We welcome contributions to improve and extend the LLM Web UI. 
-If you'd like to contribute, please do the following:
-- Fork the repository and make your changes. 
-- Once you're ready, submit a pull request for review.
+Install and run node.js
+```
+npm init -y
+```
 
-# License
+```
+npm install
+```
 
-The following repo is licensed under the MIT License.
+```
+nodemon index.js
+```
