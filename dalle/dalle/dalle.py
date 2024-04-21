@@ -26,7 +26,11 @@ class State(rx.State):
     content_made = False
     image_url = ""
     story = ""
+    color = ""
+    name = ""
+    animal = ""
 
+    
     def get_image(self, dalle_prompt: str):
         self.content_made = False
         self.content_processing = True
@@ -60,15 +64,35 @@ class State(rx.State):
 
         self.story = story
 
+    def get_color(self, color_prompt: str):
+        try:
+            response = get_openai_client().chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": color_prompt}
+                ]
+            )
+            self.content_made = True
+            self.content_processing = False
+            color = response.choices[0].message.content[-1:-13]
+            print(color)
+
+        except Exception as ex:
+            self.content_processing = False
+            return rx.window_alert(f"Error with OpenAI Execution. {ex}")
+
+        self.color = color
+
 
     def process(self, form_data: dict[str, str]):
-        animal = form_data["animal"]
-        name = form_data["name"]
+        self.animal = form_data["animal"]
+        self.name = form_data["name"]
         emotion = form_data["emotion"]
         location = form_data["location"]
-        dalle_prompt_text = f"A {emotion} {animal} that lives in {location}"
-        chatgtp_prompt_text = f"Tell a story in 4 sentences about a {emotion} {animal} \
-            named {name} who lives in {location}" 
+        dalle_prompt_text = f"A {emotion} cute {self.animal} that lives in {location}"
+        chatgtp_prompt_text = f"Tell a story in 4 sentences about a {emotion} {self.animal} \
+            named {self.name} who lives in {location}" 
+        color_prompt_text = f"Give me two colors in rgb that represent {emotion}"
         
         self.get_image(dalle_prompt_text)
         self.get_story(chatgtp_prompt_text)

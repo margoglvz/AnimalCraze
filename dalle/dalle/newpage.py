@@ -9,7 +9,7 @@ def newpage(State):
     
     return rx.center(
         rx.vstack(
-            rx.heading("Results"),
+            rx.heading(f"{State.name} the {State.animal}!"),
             rx.image(src=image_url, width="20vw", height="auto"),
             rx.divider(),
             rx.box(rx.text(story,
