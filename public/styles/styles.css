@@ -191,7 +191,7 @@ section {
 }
 
 
-.create {
+.create, .login, .signup {
     background-color: #bbff99;
     background-image: linear-gradient(319deg, #bbff99 0%, #ffec99 37%, #ff9999 100%);
     display: grid;
@@ -199,7 +199,7 @@ section {
     justify-items: center;
 }
 
-.create-form {
+.create-form, .login-form, .signup-form {
     height: 80%;
     width: 75%;
     background: #f8f4e5;
