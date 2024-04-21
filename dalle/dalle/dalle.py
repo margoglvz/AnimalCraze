@@ -22,10 +22,14 @@ def get_openai_client():
 class State(rx.State):
     """The app state."""
 
+    content_processing = False
+    content_made = False
     image_url = ""
     story = ""
 
     def get_image(self, dalle_prompt: str):
+        self.content_made = False
+        self.content_processing = True
         try:
             response = get_openai_client().images.generate(
                 prompt=dalle_prompt, n=1, size="1024x1024"
@@ -46,9 +50,12 @@ class State(rx.State):
                     {"role": "system", "content": chatgtp_prompt}
                 ]
             )
+            self.content_made = True
+            self.content_processing = False
             story = response.choices[0].message.content
 
         except Exception as ex:
+            self.content_processing = False
             return rx.window_alert(f"Error with OpenAI Execution. {ex}")
 
         self.story = story
@@ -77,22 +84,22 @@ def index():
                 rx.vstack(
                     rx.input(
                         id="animal",
-                        placeholder="Enter a prompt..",
+                        placeholder="Enter an animal..",
                         size="3",
                     ),
                     rx.input(
                         id="name",
-                        placeholder="Enter a prompt..",
+                        placeholder="Enter animal's name..",
                         size="3",
                     ),
                     rx.input(
                         id="emotion",
-                        placeholder="Enter a prompt..",
+                        placeholder="Enter animal's emotion..",
                         size="3",
                     ),
                     rx.input(
                         id="location",
-                        placeholder="Enter a prompt..",
+                        placeholder="Enter animal's location..",
                         size="3",
                     ),
                     rx.button(
@@ -106,6 +113,17 @@ def index():
                 width="100%",
                 on_submit=State.process,
             ), 
+            rx.divider(),
+            rx.cond(
+                State.content_processing,
+                rx.chakra.circular_progress(is_indeterminate=True),
+                rx.cond(
+                    State.content_made,
+                    rx.image(
+                        src=State.image_url,
+                    ),
+                ),
+            ),
             width="25em",
             bg="white",
             padding="2em",
