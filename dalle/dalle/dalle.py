@@ -25,7 +25,9 @@ class State(rx.State):
     content_processing = False
     content_made = False
     image_url = ""
+    real_image_url = ""
     story = ""
+    facts = ""
     color = ""
     name = ""
     animal = ""
@@ -44,6 +46,22 @@ class State(rx.State):
             return rx.window_alert(f"Error with OpenAI Execution. {ex}")
         
         self.image_url = image_url
+
+    def get_real_image(self, dalle_prompt2: str):
+        self.content_made = False
+        self.content_processing = True
+        try:
+            response = get_openai_client().images.generate(
+                prompt=dalle_prompt2, n=1, size="1024x1024"
+            )
+            real_image_url = response.data[0].url
+
+        except Exception as ex:
+            return rx.window_alert(f"Error with OpenAI Execution. {ex}")
+        
+        self.real_image_url = real_image_url
+
+    
     
     
     def get_story(self, chatgtp_prompt: str):
@@ -64,6 +82,24 @@ class State(rx.State):
 
         self.story = story
 
+    def get_facts(self, fact_prompt: str):
+        try:
+            response = get_openai_client().chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": fact_prompt}
+                ]
+            )
+            self.content_made = True
+            self.content_processing = False
+            facts = response.choices[0].message.content
+
+        except Exception as ex:
+            self.content_processing = False
+            return rx.window_alert(f"Error with OpenAI Execution. {ex}")
+
+        self.facts = facts
+
     def get_color(self, color_prompt: str):
         try:
             response = get_openai_client().chat.completions.create(
@@ -74,8 +110,7 @@ class State(rx.State):
             )
             self.content_made = True
             self.content_processing = False
-            color = response.choices[0].message.content[-1:-13]
-            print(color)
+            color = response.choices[0].message.content[-7:]
 
         except Exception as ex:
             self.content_processing = False
@@ -89,13 +124,18 @@ class State(rx.State):
         self.name = form_data["name"]
         emotion = form_data["emotion"]
         location = form_data["location"]
-        dalle_prompt_text = f"A {emotion} cute {self.animal} that lives in {location}"
+        dalle_prompt_text = f"A cute cartoonish {emotion} {self.animal} that lives in {location}"
         chatgtp_prompt_text = f"Tell a story in 4 sentences about a {emotion} {self.animal} \
             named {self.name} who lives in {location}" 
-        color_prompt_text = f"Give me two colors in rgb that represent {emotion}"
+        color_prompt_text = f"Give me one pleasing color in hex value that represents {emotion}"
+        facts_prompt = f"Tell me an interesting fact about {self.animal} and in two sentences how to help it in the wild"
+        real_image_prompt = f"Realistic {self.animal}"
         
         self.get_image(dalle_prompt_text)
         self.get_story(chatgtp_prompt_text)
+        self.get_color(color_prompt_text)
+        self.get_facts(facts_prompt)
+        self.get_real_image(real_image_prompt)
 
         return rx.redirect("/newpage")
 
@@ -103,7 +143,7 @@ class State(rx.State):
 def index():
     return rx.center(
         rx.vstack(
-            rx.heading("Animal Generator", font_size="1.5em"),
+            rx.heading("Create Your Creature!", font_size="1.5em"),
             rx.form(
                 rx.vstack(
                     rx.input(
@@ -149,7 +189,7 @@ def index():
         ),
         width="100%",
         height="100vh",
-        background="radial-gradient(circle at 22% 11%,rgba(41, 242, 194,.20), hsla(0,0%,100%,0) 19%),radial-gradient(circle at 82% 25%,rgba(19,128,255,.18),hsla(0,0%,100%,0) 35%),radial-gradient(circle at 25% 61%,rgba(185, 77, 251, .28),hsla(0,0%,100%,0) 55%)",
+        background="radial-gradient(circle at 22% 11%,rgba(41, 242, 194,.70), hsla(0,0%,100%,0) 80%),radial-gradient(circle at 82% 25%,rgba(19,128,255,.18),hsla(0,0%,100%,0) 55%),radial-gradient(circle at 25% 61%,rgba(185, 77, 251, .28),hsla(0,0%,100%,0) 55%)",
     )
 
 
